@@ -11,7 +11,7 @@ font = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
 bar_size_percent = 95
 location = "Aligarh,in"
 new_image_size = 1920, 1080
-api_key = "792bb1f7570e486997ec3653e7320041"
+api_key = ""
 
 response = json.loads(requests.get("https://api.openweathermap.org/data/2.5/weather?q="+location+"&appid="+api_key+"&units=metric").text)
 weather_string = timestamp+" "
