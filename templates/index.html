@@ -59,13 +59,23 @@ margin-bottom: 20px;
   </div>
 </form>
 
-<div class="btn-group">
-  <a href="/webcam" class="btn btn-secondary">Face Detection Using Webcam</a>
-</div>
-<div class="btn-group">
-  <a href="/labelled_webcam" class="btn btn-info">Face Detection along With Person's Name</a>
-</div>
-<p>* Name suggestions will be based on the available dataset.</p>
+<form method="POST">
+   <div mb-3>
+    <label for="input_name" class="form-label">Enter your name:</label>
+    <input type="text" class="form-control" id="input_name" name="input_name" required>
+    <button type="submit" formaction="/webcam" class="btn btn-primary btn-group">Face Detection Using Webcam</button>
+  <!--- <a href="/webcam" class="btn btn-secondary">Face Detection Using Webcam</a>--->
+  </div>
+</form>
+
+
+  <form>
+  <button type="submit" formaction="/labelled_webcam" class="btn btn-info btn-group">Face Detection along With Person's Name</button>
+  <br>
+  <label for="label" class="form-label">* Name suggestions will be based on the available dataset.</label>
+ <!----- <a href="/labelled_webcam" class="btn btn-info">Face Detection along With Person's Name</a> --->
+ </form>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

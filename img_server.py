@@ -25,11 +25,12 @@ def img_face_recognition():
 		cv2.imshow('Image',img)
 		cv2.waitKey(0)
 		cv2.destroyAllWindows()
-		#return render_template('index.html',message="Done")
+		return render_template('index.html')
 
-@app.route('/webcam')
+@app.route('/webcam',methods=['POST'])
 def webcam_face_recognition():
-	subprocess.run(['python3', 'data.py'])	
+	name = request.form['input_name']
+	subprocess.run(['python3', 'dataset.py', name])
 	return render_template('index.html')
 
 @app.route('/labelled_webcam')
