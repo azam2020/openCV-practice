@@ -30,8 +30,12 @@ cap = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 dataset_path = "./face_dataset/"
-
+file_name = input("Enter the name of the person: ")
 face_data, labels = load_dataset(dataset_path)
+
+new_face_data = []
+skip = 0
+
 while True:
     ret, frame = cap.read()
 
@@ -46,21 +50,31 @@ while True:
         continue
 
     faces = sorted(faces, key=lambda x: x[2] * x[3], reverse=True)
+    skip += 1
     for face in faces[:1]:
         x, y, w, h = face
         face_offset = frame[y:y+h, x:x+w]
         test_face = cv2.resize(face_offset, (100, 100))
         
-        predicted_label = predict_person(face_data, labels, test_face)
-        
         cv2.rectangle(frame, (x, y), (x + w, y + h), (8, 255, 0), 2)
-        cv2.putText(frame, predicted_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2, cv2.LINE_AA)
-
+        
+        if test_face.flatten() in face_data:
+            predicted_label = predict_person(face_data, labels, test_face)
+            cv2.putText(frame, predicted_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2, cv2.LINE_AA)
+        elif skip%10==0 and test_face.flatten() not in face_data:
+                new_face_data.append(test_face.flatten())
+                #cv2.putText(frame, "unknown_person", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2, cv2.LINE_AA)
+                
     cv2.imshow("Face Recognition", frame)
     
     key_pressed = cv2.waitKey(1) & 0xFF
     if key_pressed == ord('q'):
         break
+
+if file_name not in labels:
+    new_face_data = np.array(new_face_data)
+    new_face_data = new_face_data.reshape((new_face_data.shape[0],-1))
+    np.save(dataset_path + file_name, new_face_data)
 
 cap.release()
 cv2.destroyAllWindows()

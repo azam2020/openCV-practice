@@ -23,7 +23,7 @@ while True:
     if len(faces) == 0:
         continue
         
-    k=1
+    #k=1
 
     faces = sorted(faces, key=lambda x: x[2] * x[3], reverse=True)
     skip += 1
@@ -36,10 +36,10 @@ while True:
 
         if skip % 10 == 0:
             face_data.append(face_selection.flatten())
-            print(len(face_data))
+            #print(len(face_data))
 
-        cv2.imshow(str(skip), face_selection)
-        k += 1
+        #cv2.imshow(str(skip), face_selection)
+        #k += 1
 
         cv2.rectangle(frame, (x, y), (x + w, y + h), (8, 255, 0), 2)
 
@@ -52,7 +52,7 @@ while True:
 face_data = np.array(face_data)
 
 face_data = face_data.reshape((face_data.shape[0],-1))
-print(face_data.shape)
+#print(face_data.shape)
 
 np.save(dataset_path + file_name, face_data)
 print("Dataset saved")
