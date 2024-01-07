@@ -15,9 +15,12 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 def img_face_recognition():
 	if 'image' in request.files:
 		uploaded_image = request.files['image']
+		if uploaded_image.filename=='':
+			return render_template('index.html',message="No file selected")
+			
 		temp_path = 'temp.jpg'
 		uploaded_image.save(temp_path)
-		img = cv2.imread(temp_path)
+		img = cv2.imread(temp_path)	
 		gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 		faces = face_cascade.detectMultiScale(img, scaleFactor=1.3, minNeighbors=5)
 		for (x,y,w,h) in faces:
@@ -30,6 +33,8 @@ def img_face_recognition():
 @app.route('/webcam',methods=['POST'])
 def webcam_face_recognition():
 	name = request.form['input_name']
+	if name=='':
+		name="unknown"
 	subprocess.run(['python3', 'dataset.py', name])
 	return render_template('index.html')
 
