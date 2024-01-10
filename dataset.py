@@ -15,6 +15,12 @@ if len(sys.argv)<2:
 	sys.exit(1)
 file_name = sys.argv[1]
 
+#Record at the same time
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('latest.avi',fourcc,25.0,(640,480))
+
+
+
 while True:
     ret, frame = cap.read()
 
@@ -27,9 +33,6 @@ while True:
 
     if len(faces) == 0:
         continue
-        
-    #k=1
-
     faces = sorted(faces, key=lambda x: x[2] * x[3], reverse=True)
     skip += 1
 
@@ -41,13 +44,10 @@ while True:
 
         if skip % 10 == 0:
             face_data.append(face_selection.flatten())
-            #print(len(face_data))
-
-        #cv2.imshow(str(skip), face_selection)
-        #k += 1
 
         cv2.rectangle(frame, (x, y), (x + w, y + h), (8, 255, 0), 2)
 
+    out.write(frame)
     cv2.imshow("Faces", frame)
 
     key_pressed = cv2.waitKey(1) & 0xFF
@@ -57,9 +57,12 @@ while True:
 face_data = np.array(face_data)
 
 face_data = face_data.reshape((face_data.shape[0],-1))
-#print(face_data.shape)
 
-np.save(dataset_path + file_name, face_data)
-print("Dataset saved")
+if file_name != "unknown":
+	np.save(dataset_path + file_name, face_data)
+	print(f"Data saved as {file_name}.avi")
+print("Data not saved. Reason: name not entered")
+print("Video recorded as latest.avi")
 cap.release()
+out.release()
 cv2.destroyAllWindows()
