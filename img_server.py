@@ -30,14 +30,14 @@ def img_face(temp_path):
 	cv2.destroyAllWindows()
 
 def video_face():
-	face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xm')
-	cap = VideoCapture('uploaded_video.avi')
+	face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+	cap = cv2.VideoCapture('uploaded_video.avi')
 	while(True):
 		ret, frame = cap.read()
 		if not ret:
 			break
 		gray= cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-		faces = face_cascade.defaultMultiScale(gray,caleFactor=1.3,minNeighbors=5)
+		faces = face_cascade.detectMultiScale(gray,scaleFactor=1.3,minNeighbors=5)
 		for (x,y,w,h) in faces:
 			cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
 		cv2.imshow('Frame',frame)
@@ -66,9 +66,9 @@ def video_face_recognition():
                 uploaded_video = request.files['video']
                 if uploaded_video.filename=='':
                         return render_template('index.html',message="No file selected")
-                uploaded_video.save(os.path.join('uploaded_video.avi'))
+                uploaded_video.save('uploaded_video.avi')
                 video_face()
-                render_template('index.html')
+                return render_template('index.html')
 
 
 
