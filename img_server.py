@@ -30,6 +30,7 @@ def img_face(temp_path):
 	cv2.destroyAllWindows()
 
 def video_face():
+	print("video-face function called")
 	face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 	cap = cv2.VideoCapture('uploaded_video.avi')
 	while(True):
@@ -106,9 +107,9 @@ def play_video():
 def click_picture():
 	subprocess.run(['fswebcam','-r','1920x1080','-p','YUYV','-s','30','-D','5','-F','2','--no-banner','new.jpg'])
 	#return render_template('index.html',message="Please look towards the camera for picture.")
-	path = 'capturepics/latest.jpg'
-	img_face(path)
-	return render_template('index.html')
+	#path = 'capturepics/latest.jpg'
+	img_face("new.jpg")
+	return render_template('index.html',message="Picture Clicked......!!")
 @app.route('/labelled_webcam')
 def labelled_webcam_face_recognition():
 	subprocess.run(['python3', 'label.py'])

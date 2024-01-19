@@ -56,12 +56,13 @@ while True:
 
 face_data = np.array(face_data)
 
-face_data = face_data.reshape((face_data.shape[0],-1))
+#face_data = face_data.reshape(face_data.shape[0],-1)
 
 if file_name != "unknown":
 	np.save(dataset_path + file_name, face_data)
 	print(f"Data saved as {file_name}.avi")
-print("Data not saved. Reason: name not entered")
+else:
+	print("Data not saved. Reason: name not entered")
 print("Video recorded as latest.avi")
 cap.release()
 out.release()
