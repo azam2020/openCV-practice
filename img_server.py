@@ -25,6 +25,7 @@ def img_face(temp_path):
 	r = h/w
 	dh = int(r*dw)
 	img = cv2.resize(img,(dw,dh))
+	cv2.imwrite('detected-face.jpg',img)
 	#cv2.imshow('Image',img)
 	#cv2.waitKey(0)
 	#cv2.destroyAllWindows()
