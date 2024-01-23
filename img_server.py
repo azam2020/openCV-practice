@@ -105,10 +105,10 @@ def play_video():
 
 @app.route('/picture')
 def click_picture():
-	subprocess.run(['fswebcam','-r','1920x1080','-p','YUYV','-s','30','-D','5','-F','2','--no-banner','new.jpg'])
+	subprocess.run(['fswebcam','-r','1920x1080','-p','YUYV','-s','30','-D','5','-F','2','--no-banner','clicked-pic.jpg'])
 	#return render_template('index.html',message="Please look towards the camera for picture.")
 	#path = 'capturepics/latest.jpg'
-	img_face("new.jpg")
+	img_face("clicked-pic.jpg")
 	return render_template('index.html',message="Picture Clicked......!!")
 @app.route('/labelled_webcam')
 def labelled_webcam_face_recognition():
